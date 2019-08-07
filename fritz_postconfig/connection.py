@@ -9,6 +9,7 @@ LOCATION_DICT = {
     'internet': 'pppoe',
     'system': 'reset',
     'home': 'home',
+    'reset': 'reset',
 }
 
 class Connection:

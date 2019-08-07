@@ -1,1 +1,1 @@
-from .connection import Connection
+from .connection_mod import Connection

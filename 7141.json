@@ -1,5 +1,19 @@
-[
-  {
+{
+  "needsSid": "False",
+  "resetWhenPass": {
+    "method": "resetWhenPass",
+    "route": "cgi-bin/webcm",
+    "description": "Resetting router, Passdetected",
+    "data": {
+      "getpage": "../html/restore.html",
+      "errorpage": "./html/restoreerror.html",
+      "var:lang": "<? echo $var:lang ?>",
+      "var:pagename": "home",
+      "var:menu": "home",
+      "login:command/defaults": "../gateway/commands/saveconfig.html"
+    }
+  },
+  "restWhenNoPass": {
     "method": "resetWhenNoPass",
     "route": "/cgi-bin/webcm",
     "data": {
@@ -7,29 +21,31 @@
       "errorpage": "../html/de/menus/menu2.html",
       "var:lang": "de",
       "var:pagename": "reset",
-      "var:errorpagename": "reset",
       "var:menu": "system",
       "var:tabReset": "1",
       "logic:command/defaults": "../gateway/commands/saveconfig.html"
     }
   },
-  {
+  "enableExpertMode": {
     "method": "call_api",
-    "route": "/system/expert.lua",
+    "route": "/cgi-bin/webcm",
     "description": "Enabeling expert mode",
     "data": {
-      "expert": 1
+      "var:pagename": "extended",
+      "var:errorpagename": "extended",
+      "var:menu": "system",
+      "var:pagemaster": "",
+      "box:settings/expertmode/activated": "1"
     }
   },
-  {
-    "method": "request",
-    "route": "internet",
+  "setupInternet": {
+    "method": "setupInternet",
+    "route": "/cgi-bin/webcm",
     "description": "Configuring \"internet\"",
     "data": {
-      "providerlist:settings/activeprovider": "other",
       "connection0:settings/type": "bridge",
       "connection0:settings/tcom_targetarch": "0",
-      "connection0:settings/aontv_arch": "0",
+      "box:settings/trafficshaping/activated": "1",
       "box:settings/ManualDSLSpeed": "0",
       "sar:settings/encapsulation": "dslencap_ether",
       "sar:settings/autodetect": "0",
@@ -37,7 +53,9 @@
       "sar:settings/VCI": "32",
       "sar:settings/dslencap_ether/use_dhcp": "1",
       "box:settings/ata_mode": "0",
+      "var:activtype": "bridge",
+      "var:isFirst": "0",
       "var:ifmode": "modem"
     }
   }
-]
+}
