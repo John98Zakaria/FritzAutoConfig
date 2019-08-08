@@ -4,7 +4,7 @@ from xml.etree import ElementTree as ET
 import json
 import requests
 import time
-
+from random import randint
 
 class Connection:
     def __init__(self, host, model=None):
@@ -28,14 +28,14 @@ class Connection:
         relevantDict = self.json['resetWhenPass']
         requests.post(self.host + relevantDict['route'], data=relevantDict['data'])
         time.sleep(5)  # Wait before assuming no Pass
-        try:
-            r = requests.get(self.host)
-        except requests.exceptions.ConnectionError:
-            #Router was restarting, skip next step
-            return
-        print("Router had no password, trying alternative")
-        relevantDict = self.json['restWhenNoPass']
-        self.call_api(relevantDict)
+        # try:
+        #     r = requests.get(self.host)
+        # except requests.exceptions.ConnectionError:
+        #     #Router was restarting, skip next step
+        #     return
+        # print("Router had no password, trying alternative")
+        # relevantDict = self.json['restWhenNoPass']
+        # self.call_api(relevantDict)
 
     def enableExpertMode(self):
         self.login()
@@ -51,6 +51,10 @@ class Connection:
     def wifiSetup(self):
         print("Setting up Wifi Settings")
         relevantDict = self.json['wifiSetup']
+        wifiName = input("Wifi Namen eingeben")
+        relevantDict['data']['wlan:settings/ssid']=wifiName
+        wifiChannel = randint(1,11)
+        relevantDict['data']['wlan:settings/channel'] = wifiChannel
         self.call_api(relevantDict)
 
     def login(self):

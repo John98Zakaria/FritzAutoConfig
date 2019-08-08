@@ -30,7 +30,7 @@ host = 'http://' + host
 # Setup connection
 
 
-fritz = Connection(host, 'FRITZ!Box Fon WLAN 7170 (UI)')
+fritz = Connection(host, 'FRITZ!Box FON WLAN')
 fritz.reset()
 for i in range(100,-1,-1):
     print(f"\r restarting {i}s left",end="")
