@@ -1,0 +1,84 @@
+{
+  "needsSid": false,
+  "manualwifipass": false,
+
+  "resetWhenPass": {
+    "method": "resetWhenPass",
+    "route": "/cgi-bin/webcm",
+    "description": "Resetting router, Passdetected",
+    "data": {
+      "getpage": "../html/restore.html",
+      "errorpage": "./html/restoreerror.html",
+      "var:lang": "<? echo $var:lang ?>",
+      "var:pagename": "home",
+      "var:menu": "home",
+      "login:command/defaults": "../gateway/commands/saveconfig.html"
+    }
+  },
+  "restWhenNoPass": {
+    "method": "resetWhenNoPass",
+    "description": "Resetting router, NoPass Detected",
+    "route": "/cgi-bin/webcm",
+    "data": {
+      "getpage": "../html/restore.html",
+      "errorpage": "../html/de/menus/menu2.html",
+      "var:lang": "de",
+      "var:pagename": "reset",
+      "var:menu": "system",
+      "var:tabReset": "1",
+      "logic:command/defaults": "../gateway/commands/saveconfig.html"
+    }
+  },
+  "enableExpertMode": {
+    "method": "call_api",
+    "route": "/cgi-bin/webcm",
+    "description": "Enabeling expert mode",
+    "data": {
+      "var:pagename": "extended",
+      "var:errorpagename": "extended",
+      "var:menu": "system",
+      "var:pagemaster": "",
+      "box:settings/expertmode/activated": "1"
+    }
+  },
+  "setupInternet": {
+    "method": "setupInternet",
+    "route": "/cgi-bin/webcm",
+    "description": "Configuring \"internet\"",
+    "data": {
+      "connection0:settings/type": "bridge",
+      "connection0:settings/tcom_targetarch": "0",
+      "box:settings/trafficshaping/activated": "1",
+      "box:settings/ManualDSLSpeed": "0",
+      "sar:settings/encapsulation": "dslencap_ether",
+      "sar:settings/autodetect": "0",
+      "sar:settings/VPI": "1",
+      "sar:settings/VCI": "32",
+      "sar:settings/dslencap_ether/use_dhcp": "1",
+      "box:settings/ata_mode": "0",
+      "var:activtype": "bridge",
+      "var:isFirst": "0",
+      "var:ifmode": "modem"
+    }
+  },
+  "wifiSetup": {
+    "method": "wifiSetup",
+    "route": "/cgi-bin/webcm",
+    "description": "WifiName & Channel",
+    "data": {
+      "var:pagename": "common",
+      "var:errorpagename": "common",
+      "var:menu": "wlan",
+      "wlan:settings/ap_enabled": "1",
+      "wlan:settings/channel": "0",
+      "wlan:settings/ssid": "Donate your Routers for the NAG",
+      "wlan:settings/hidden_ssid": "0",
+      "wlan:settings/power_level": "1",
+      "wlan:settings/user_isolation": "0",
+      "wlan:settings/channelwidth": "1",
+      "wlan:settings/tx_autopower": "0",
+      "ctlusb:settings/autoprov_enabled": "1",
+      "mini:settings/enabled": "0"
+    }
+  }
+}

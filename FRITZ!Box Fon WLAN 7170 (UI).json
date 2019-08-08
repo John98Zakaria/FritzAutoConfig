@@ -1,0 +1,62 @@
+{
+  "needsSid": true,
+  "manualwifipass": false,
+  "enableExpertMode": {
+    "method": "call_api",
+    "route": "/system/expert.lua",
+    "description": "Enabeling expert mode",
+    "data": {
+      "expert": 1
+    }
+  },
+  "setupInternet": {
+    "method": "request",
+    "route": "/cgi-bin/webcm",
+    "description": "Configuring \"internet\"",
+    "data": {
+      "providerlist:settings/activeprovider": "other",
+      "connection0:settings/type": "bridge",
+      "connection0:settings/tcom_targetarch": "0",
+      "connection0:settings/aontv_arch": "0",
+      "box:settings/ManualDSLSpeed": "0",
+      "sar:settings/encapsulation": "dslencap_ether",
+      "sar:settings/autodetect": "0",
+      "sar:settings/VPI": "1",
+      "sar:settings/VCI": "32",
+      "sar:settings/dslencap_ether/use_dhcp": "1",
+      "box:settings/ata_mode": "0",
+      "var:ifmode": "modem"
+    }
+  },
+  "restWhenNoPass": {
+    "description": "Resetting router, NoPass Detected",
+    "method": "resetWhenNoPass",
+    "route": "/system/defaults.lua",
+    "data": {
+      "defaults": ""
+    }
+  },
+  "resetWhenPass": {
+    "method": "resetWhenPass",
+    "route": "/vergessen.lua",
+    "description": "Resetting router, Passdetected",
+    "data": {
+      "reset":""
+    }
+  },
+  "wifiSetup": {
+    "method": "wifiSetup",
+    "route": "/cgi-bin/webcm",
+    "description": "WifiName & Channel",
+    "data": {
+      "var:pagename": "common",
+      "var:errorpagename": "common",
+      "var:menu": "wlan",
+      "wlan:settings/ap_enabled": "1",
+      "wlan:settings/ssid": "LongLive Hechtsheim",
+      "wlan:settings/hidden_ssid": "0",
+      "wlan:settings/user_isolation": "1",
+      "mini:settings/enabled": "0"
+    }
+  }
+}

@@ -28,11 +28,18 @@ host = 'http://' + host
 
 
 # Setup connection
-fritz = Connection(host, '7141')
-print('Sending reset request... ')
 
-#fritz.reset()
+
+fritz = Connection(host, 'FRITZ!Box Fon WLAN 7170 (UI)')
+fritz.reset()
+for i in range(100,-1,-1):
+    print(f"\r restarting {i}s left",end="")
+    time.sleep(1)
+
+print()
 
 fritz.enableExpertMode()
-
 fritz.setupInternet()
+fritz.login()
+
+fritz.wifiSetup()

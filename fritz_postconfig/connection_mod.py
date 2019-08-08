@@ -3,17 +3,16 @@ from .error import *
 from xml.etree import ElementTree as ET
 import json
 import requests
+import time
 
 
 class Connection:
-    def __init__(self, host,model=None):
+    def __init__(self, host, model=None):
         self.host = host
         self._sid = None
         self.model = model
-        with open(self.model + '.json','r') as f:
+        with open(self.model + '.json', 'r') as f:
             self.json = json.load(f)
-
-
 
     def call_api(self, dict):
         data = dict['data']
@@ -24,21 +23,35 @@ class Connection:
         return resp
 
     def reset(self):
-        #Assume Pass
-        relevantDict= self.json['resetWhenPass']
-        requests.post(self.host+relevantDict['route'],data=relevantDict['data'])
-        #Assume NoPass
+        # Assume Pass
+        print("Resetting Router")
+        relevantDict = self.json['resetWhenPass']
+        requests.post(self.host + relevantDict['route'], data=relevantDict['data'])
+        time.sleep(5)  # Wait before assuming no Pass
+        try:
+            r = requests.get(self.host)
+        except requests.exceptions.ConnectionError:
+            #Router was restarting, skip next step
+            return
+        print("Router had no password, trying alternative")
         relevantDict = self.json['restWhenNoPass']
         self.call_api(relevantDict)
+
     def enableExpertMode(self):
         self.login()
+        print('Activating expert mode')
         relevantDict = self.json['enableExpertMode']
         self.call_api(relevantDict)
 
     def setupInternet(self):
+        print("Setting up internet settings")
         relevantDict = self.json['setupInternet']
         self.call_api(relevantDict)
 
+    def wifiSetup(self):
+        print("Setting up Wifi Settings")
+        relevantDict = self.json['wifiSetup']
+        self.call_api(relevantDict)
 
     def login(self):
         resp = requests.get(self.host + '/login_sid.lua')
