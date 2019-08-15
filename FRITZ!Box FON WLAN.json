@@ -1,7 +1,6 @@
 {
   "needsSid": false,
   "manualwifipass": false,
-
   "resetWhenPass": {
     "method": "resetWhenPass",
     "route": "/cgi-bin/webcm",
