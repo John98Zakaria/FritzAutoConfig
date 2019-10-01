@@ -1,15 +1,13 @@
 from fritz_postconfig import Connection
+import json
 import re
 import requests
 import time
 
 
 
-NAME_DICT = {
-    '7141': 'Fritz!Box Fon WLAN 7141 (UI)',
-    '7170': 'Fritz!Box Fon WLAN 7170 (UI)',
-    'default': 'Fritz!Box Fon WLAN 7141 (UI)',
-}
+with open('config.json', 'r') as config:
+    NAME_DICT = json.parse(config.read())
 
 def main():
     host = input('Please enter host ({ENTER} for fritz.box): ')
