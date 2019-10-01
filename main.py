@@ -6,10 +6,7 @@ import time
 
 
 
-with open('config.json', 'r') as config:
-    NAME_DICT = json.parse(config.read())
-
-def main():
+def main(config):
     host = input('Please enter host ({ENTER} for fritz.box): ')
     if not host:
         host = '192.168.178.1'
@@ -17,14 +14,14 @@ def main():
     # initialize connection
     fritz = Connection(host)
     print('Please enter one of the following modelnames: ')
-    for name in NAME_DICT:
+    for name in config:
         print('- {:>10}'.format(name))
     modelname = input('> ')
     if not fritz.wait_for_connection():
         print('It is dead, Jim...')
         return
-    if modelname in NAME_DICT:
-        modelname = NAME_DICT[modelname]
+    if modelname in config:
+        modelname = config[modelname]
     else:
         # Detect fritzbox model
         print('Reading desc.xml-files...', end='', flush=True)
@@ -36,9 +33,9 @@ def main():
             if resp.ok:
                 result = re.findall('<modelName>(.*?)<\/modelName>', resp.text)
                 modelname, *_ = result
-                for name in NAME_DICT:
+                for name in config:
                     if name in modelname:
-                        modelname = NAME_DICT[name]
+                        modelname = config[name]
                         break
                 else:
                     modelname = None
@@ -47,7 +44,7 @@ def main():
     # Manual model entry
     if modelname is None:
         print('error finding modelname, using default')
-        modelname = NAME_DICT['default']
+        modelname = config['default']
     # Call setup from connection
     print('Trying model "{}"...'.format(modelname))
     fritz.model = modelname
@@ -59,7 +56,9 @@ def main():
 if __name__ == '__main__':
     while True:
         try:
-            main()
+            with open('config.json', 'r') as config:
+                config = json.load(config)
+            main(config)
         except KeyboardInterrupt:
             raise SystemExit
         except Error as e:

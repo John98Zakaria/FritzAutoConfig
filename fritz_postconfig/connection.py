@@ -63,6 +63,7 @@ class Connection:
             print('-', end='', flush=True)
             delta = time.time() - start_time
             if delta > 20:
+                print()
                 return False
             time.sleep(1)
         print('_', end='', flush=True)
