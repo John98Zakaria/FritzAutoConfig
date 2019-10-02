@@ -1,5 +1,4 @@
 import requests
-from .error import *
 from xml.etree import ElementTree as ET
 import json
 import requests

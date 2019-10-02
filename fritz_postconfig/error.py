@@ -1,1 +1,0 @@
-class Fritz_LoginError(ConnectionRefusedError): pass

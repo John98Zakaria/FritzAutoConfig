@@ -61,5 +61,5 @@ if __name__ == '__main__':
             main(config)
         except KeyboardInterrupt:
             raise SystemExit
-        except Error as e:
+        except Exception as e:
             print(e)
