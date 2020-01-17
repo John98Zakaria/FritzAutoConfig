@@ -129,8 +129,11 @@ class Connection:
             query['sid'] = self._sid
         resp = requests.get(self.host + route, params=query)
         findings = re.findall('((?:[0-9a-fA-F]{2}[:-]){5}[0-9a-fA-F]{2})', resp.text)
-        findings, *_ = findings
-        print(findings)
+        if not findings:
+            print('Could not locate MAC')
+        else:
+            findings, *_ = findings
+            print(findings)
 
     def login(self):
         resp = requests.get(self.host + '/login_sid.lua')
